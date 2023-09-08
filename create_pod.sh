@@ -1,13 +1,10 @@
 POD_NAME=laravel-forum
 
-DB_DIR=./database/pgsql/
 PGSQL_PASSWORD=1234
 
 PGADMIN_EMAIL=pgadmin@example.com
 PGADMIN_PASSWORD=K4HeAk1xzNg4OZ9zAZVKSSwXs
 PGADMIN_PORT=5050
-
-mkdir -p $DB_DIR
 
 podman pod create \
     -p 5050:5050 \
@@ -17,7 +14,6 @@ podman pod create \
 podman create \
     --name ${POD_NAME}-db \
     -e "POSTGRES_PASSWORD=$PGSQL_PASSWORD" \
-    -v "$DB_DIR:/var/lib/postgresql/data:Z" \
     --pod $POD_NAME \
     postgres
 
