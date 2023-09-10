@@ -1,5 +1,8 @@
 POD_NAME=laravel-forum
 
+PGADMIN_IMAGE=docker.io/dpage/pgadmin4
+PGSQL_IMAGE=docker.io/library/postgres
+
 PGSQL_PASSWORD=1234
 
 PGADMIN_EMAIL=pgadmin@example.com
@@ -15,7 +18,7 @@ podman create \
     --name ${POD_NAME}-db \
     -e "POSTGRES_PASSWORD=$PGSQL_PASSWORD" \
     --pod $POD_NAME \
-    postgres
+    $PGSQL_IMAGE
 
 podman create \
     -e "PGADMIN_DEFAULT_EMAIL=$PGADMIN_EMAIL" \
@@ -23,4 +26,4 @@ podman create \
     -e "PGADMIN_LISTEN_PORT=$PGADMIN_PORT" \
     --name ${POD_NAME}-pgadmin \
     --pod $POD_NAME \
-    docker.io/dpage/pgadmin4
+    $PGADMIN_IMAGE
