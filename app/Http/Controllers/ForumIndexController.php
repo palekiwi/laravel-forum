@@ -16,7 +16,7 @@ class ForumIndexController extends Controller
                 Discussion::with(['topic'])
                     ->orderByPinned()
                     ->latest() // Remove when implemented ordering by last post
-                    ->paginate(1)
+                    ->paginate(10)
             ),
         ]);
     }
