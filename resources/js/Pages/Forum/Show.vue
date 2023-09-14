@@ -18,10 +18,8 @@ defineProps({
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="flex items-center space-x-3">
-                        <span
-                            class="inline-flex items-center rounded-lg bg-gray-100 px-3 py-0.5 text-sm text-gray-600"
-                            >{{ discussion.topic.name }}</span
-                        >
+                        <span class="inline-flex items-center rounded-lg bg-gray-100 px-3 py-0.5 text-sm text-gray-600">{{
+                            discussion.topic.name }}</span>
                         <h1 class="text-lg font-medium">
                             <template v-if="discussion.is_pinned">
                                 [Pinned]
@@ -31,7 +29,10 @@ defineProps({
                     </div>
                 </div>
             </div>
-            <Post v-for="post in posts.data" :post="post" :key="post.id" />
+            <template v-if="posts.data.length">
+                <Post v-for="post in posts.data" :post="post" :key="post.id" />
+                <Pagination :pagination="posts.meta" />
+            </template>
         </div>
 
         <template #side>
