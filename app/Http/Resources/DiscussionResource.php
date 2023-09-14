@@ -5,6 +5,11 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class DiscussionResource
+ *
+ * @mixin \App\Models\Discussion
+ * */
 class DiscussionResource extends JsonResource
 {
     /**

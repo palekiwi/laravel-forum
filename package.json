@@ -18,5 +18,8 @@
         "vite": "^4.0.0",
         "volar-service-prettyhtml": "^0.0.13",
         "vue": "^3.2.41"
+    },
+    "dependencies": {
+        "dayjs": "^1.11.9"
     }
 }
