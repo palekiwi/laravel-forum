@@ -13,7 +13,7 @@ class ForumIndexController extends Controller
     {
         return Inertia::render('Forum/Index', [
             'discussions' => DiscussionResource::collection(
-                Discussion::with(['topic', 'post'])
+                Discussion::with(['topic', 'post', 'latestPost.user'])
                     ->orderByPinned()
                     ->latest() // Remove when implemented ordering by last post
                     ->paginate(10)

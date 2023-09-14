@@ -33,7 +33,7 @@ class Discussion extends Model
 
     public function post(): HasOne
     {
-        return $this->hasOne(Post::class)->whereNull('parent_id');
+        return $this->hasOne(Post::class)->oldestOfMany('created_at');
     }
 
     public function posts(): HasMany
@@ -44,5 +44,10 @@ class Discussion extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function latestPost(): HasOne
+    {
+        return $this->hasOne(Post::class)->latestOfMany();
     }
 }
