@@ -37,7 +37,7 @@
                     </time>
                 </Link>
             </div>
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0 flex items-end flex-col">
                 <div class="flex items-center justify-start -space-x-1">
                     <img
                         v-for="participant in participants"
@@ -53,6 +53,9 @@
                         + {{ remaining }} more
                     </span>
                 </div>
+                <div class="text-sm mt-3">
+                    {{ pluralize("reply", discussion.replies_count, true) }}
+                </div>
             </div>
         </div>
     </Link>
@@ -61,6 +64,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { computed } from "vue";
+import pluralize from "pluralize";
 
 const props = defineProps({
     discussion: Object
