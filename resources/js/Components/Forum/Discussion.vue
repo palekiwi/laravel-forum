@@ -1,22 +1,3 @@
-<script setup>
-import { Link } from "@inertiajs/vue3";
-import { computed } from "vue";
-
-const props = defineProps({
-    discussion: Object
-});
-
-const maxParts = 3;
-
-const participants = computed(() =>
-    props.discussion.participants.slice(0, maxParts)
-);
-
-const remaining = computed(
-    () => props.discussion.participants.length - maxParts
-);
-</script>
-
 <template>
     <Link
         :href="route('discussions.show', discussion)"
@@ -44,7 +25,10 @@ const remaining = computed(
                     :href="route('discussions.show', discussion)"
                     class="inline-block text-sm mt-6"
                 >
-                    Last post by {{ discussion.latestPost.user.username }}
+                    Last post by
+                    {{
+                        discussion.latestPost.user?.username || "[user deleted]"
+                    }}
                     <time
                         :datetime="discussion.latestPost.created_at.dateTime"
                         :title="discussion.latestPost.created_at.dateTime"
@@ -73,3 +57,22 @@ const remaining = computed(
         </div>
     </Link>
 </template>
+
+<script setup>
+import { Link } from "@inertiajs/vue3";
+import { computed } from "vue";
+
+const props = defineProps({
+    discussion: Object
+});
+
+const maxParts = 3;
+
+const participants = computed(() =>
+    props.discussion.participants.slice(0, maxParts)
+);
+
+const remaining = computed(
+    () => props.discussion.participants.length - maxParts
+);
+</script>
