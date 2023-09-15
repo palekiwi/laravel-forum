@@ -1,3 +1,22 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+import { computed } from "vue";
+
+const props = defineProps({
+    discussion: Object
+});
+
+const maxParts = 3;
+
+const participants = computed(() =>
+    props.discussion.participants.slice(0, maxParts)
+);
+
+const remaining = computed(
+    () => props.discussion.participants.length - maxParts
+);
+</script>
+
 <template>
     <Link
         :href="route('discussions.show', discussion)"
@@ -37,21 +56,20 @@
             <div class="flex-shrink-0">
                 <div class="flex items-center justify-start -space-x-1">
                     <img
-                        v-for="participant in discussion.participants"
+                        v-for="participant in participants"
                         :key="participant.id"
                         :src="participant.avatar_url"
                         class="h-6 w-6 rounded-full ring-2 ring-white first-of-type:w-7 first-of-type:h-7"
                         :title="participant.username"
                     />
+                    <span
+                        class="!ml-1 text-sm text-gray-600"
+                        v-if="discussion.participants.length > maxParts"
+                    >
+                        + {{ remaining }} more
+                    </span>
                 </div>
             </div>
         </div>
     </Link>
 </template>
-
-<script setup>
-import { Link } from "@inertiajs/vue3";
-defineProps({
-    discussion: Object
-});
-</script>
