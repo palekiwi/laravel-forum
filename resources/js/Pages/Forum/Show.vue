@@ -31,9 +31,7 @@
         </div>
 
         <template #side>
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">Side</div>
-            </div>
+            <Navigation />
         </template>
     </ForumLayout>
 </template>
@@ -42,6 +40,7 @@
 import ForumLayout from "@/Layouts/ForumLayout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Post from "@/Components/Forum/Post.vue";
+import Navigation from "@/Components/Forum/Navigation.vue";
 import { Head } from "@inertiajs/vue3";
 import pluralize from "pluralize";
 
