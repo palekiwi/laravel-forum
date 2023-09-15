@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\QueryFilters\NoRepliesQueryFilter;
 use App\Http\Resources\DiscussionResource;
 use App\Models\Discussion;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -12,9 +13,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ForumIndexController extends Controller
 {
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         return Inertia::render('Forum/Index', [
+            'query' => (object) $request->query(),
             'discussions' => DiscussionResource::collection(
                 QueryBuilder::for(Discussion::class)
                     ->allowedFilters($this->allowedFilters())
@@ -24,7 +26,8 @@ class ForumIndexController extends Controller
                     ->withCount('replies')
                     ->orderByPinned()
                     ->orderByLastPost()
-                    ->paginate(10)
+                    ->paginate(1)
+                    ->appends($request->query())
             ),
         ]);
     }

@@ -4,10 +4,15 @@
             <nav>
                 <ul class="space-y-2">
                     <li>
-                        <Link href="/">All Discussions</Link>
+                        <Link href="/" :class="{
+                            'font-bold':
+                                !query.filter &&
+                                $page.component === 'Forum/Index'
+                        }">All Discussions</Link>
                     </li>
                     <li>
-                        <Link href="/?filter[noreplies]=1">No Replies</Link>
+                        <Link href="/?filter[noreplies]=1" :class="{ 'font-bold': query.filter?.noreplies }">No Replies
+                        </Link>
                     </li>
                     <li>
                         <Link>Third Filter</Link>
@@ -20,4 +25,8 @@
 
 <script setup>
 import { Link } from "@inertiajs/vue3";
+
+defineProps({
+    query: Object
+});
 </script>

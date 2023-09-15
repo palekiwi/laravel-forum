@@ -11,11 +11,7 @@
                             <option value="">
                                 All Topics
                             </option>
-                            <option
-                                :value="topic.slug"
-                                v-for="topic in $page.props.topics"
-                                :key="topic.id"
-                            >
+                            <option :value="topic.slug" v-for="topic in $page.props.topics" :key="topic.id">
                                 {{ topic.name }}
                             </option>
                         </Select>
@@ -24,18 +20,14 @@
             </div>
             <div class="space-y-3">
                 <template v-if="discussions.data.length">
-                    <Discussion
-                        v-for="discussion in discussions.data"
-                        :key="discussion.id"
-                        :discussion="discussion"
-                    />
+                    <Discussion v-for="discussion in discussions.data" :key="discussion.id" :discussion="discussion" />
                     <Pagination :pagination="discussions.meta" />
                 </template>
             </div>
         </div>
 
         <template #side>
-            <Navigation />
+            <Navigation :query="query" />
         </template>
     </ForumLayout>
 </template>
@@ -50,6 +42,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import { Head } from "@inertiajs/vue3";
 
 defineProps({
-    discussions: Object
+    discussions: Object,
+    query: Object
 });
 </script>
