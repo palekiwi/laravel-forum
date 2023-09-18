@@ -8,6 +8,8 @@
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
         "@tailwindcss/forms": "^0.5.3",
+        "@types/lodash.isempty": "^4.4.7",
+        "@types/lodash.omitby": "^4.6.7",
         "@types/pluralize": "^0.0.30",
         "@vitejs/plugin-vue": "^4.0.0",
         "@vue/server-renderer": "^3.2.31",
@@ -22,6 +24,8 @@
     },
     "dependencies": {
         "dayjs": "^1.11.9",
+        "lodash.isempty": "^4.4.0",
+        "lodash.omitby": "^4.6.0",
         "pluralize": "^8.0.0"
     }
 }

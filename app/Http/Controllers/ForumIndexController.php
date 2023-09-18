@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\QueryFilters\MineQueryFilter;
 use App\Http\QueryFilters\NoRepliesQueryFilter;
 use App\Http\QueryFilters\ParticipatingQueryFilter;
+use App\Http\QueryFilters\TopicQueryFilter;
 use App\Http\Resources\DiscussionResource;
 use App\Models\Discussion;
 use Illuminate\Http\Request;
@@ -43,6 +44,7 @@ class ForumIndexController extends Controller
             AllowedFilter::custom('noreplies', new NoRepliesQueryFilter()),
             AllowedFilter::custom('mine', new MineQueryFilter()),
             AllowedFilter::custom('participating', new ParticipatingQueryFilter()),
+            AllowedFilter::custom('topic', new TopicQueryFilter()),
         ];
     }
 }
