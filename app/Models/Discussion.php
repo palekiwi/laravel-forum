@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 /**
  * @mixin IdeHelperDiscussion
@@ -16,6 +17,25 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Discussion extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title', 'slug',
+    ];
+
+    protected static function booted(): void
+    {
+        static::created(function (Discussion $discussion) {
+            $discussion->update(['slug' => $discussion->title]);
+        });
+    }
+
+    /**
+     * @param  mixed  $value
+     */
+    public function setSlugAttribute($value): void
+    {
+        $this->attributes['slug'] = $this->id.'-'.Str::slug($value);
+    }
 
     public function scopeOrderByPinned(Builder $query): void
     {

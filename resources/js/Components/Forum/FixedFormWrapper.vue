@@ -1,5 +1,5 @@
 <template>
-    <div
+    <form
         class="fixed bottom-0 w-full bg-white p-6 border-t-4 border-gray-400 space-y-3"
     >
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -13,5 +13,5 @@
                 <slot name="button" />
             </div>
         </div>
-    </div>
+    </form>
 </template>
