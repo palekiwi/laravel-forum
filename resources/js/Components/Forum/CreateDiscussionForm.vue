@@ -8,7 +8,7 @@ import Select from "../Select.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import useCreateDiscussion from "@/Composables/useCreateDiscussion";
 
-const { visible, hideCreateDiscussionForm } = useCreateDiscussion();
+const { form, visible, hideCreateDiscussionForm } = useCreateDiscussion();
 </script>
 
 <template>
@@ -34,28 +34,44 @@ const { visible, hideCreateDiscussionForm } = useCreateDiscussion();
                                 class="sr-only"
                             />
 
-                            <TextInput id="title" type="text" class="w-full" />
+                            <TextInput
+                                id="title"
+                                type="text"
+                                class="w-full"
+                                placeholder="Discussion Title"
+                                v-model="form.title"
+                            />
 
-                            <!-- <InputError class="mt-2" /> -->
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.title"
+                            />
                         </div>
                     </div>
                     <div>
-                        <Select id="topic">
-                            <option disabled>
+                        <InputLabel for="topic" value="Topic" class="sr-only" />
+                        <Select id="topic" v-model="form.topic_id">
+                            <option value="">
                                 Choose a topic
                             </option>
                             <option
-                                :value="topic.slug"
+                                :value="topic.id"
                                 v-for="topic in $page.props.topics"
                                 :key="topic.id"
                             >
                                 {{ topic.name }}
                             </option>
                         </Select>
+                        <InputError
+                            class="mt-2"
+                            :message="form.errors.topic_id"
+                        />
                     </div>
                 </div>
                 <div class="mt-4">
-                    <TextArea class="w-full" rows="6" />
+                    <InputLabel for="body" value="Body" class="sr-only" />
+                    <TextArea class="w-full" rows="6" v-model="form.body" />
+                    <InputError class="mt-2" :message="form.errors.body" />
                 </div>
             </template>
             <template #button>
