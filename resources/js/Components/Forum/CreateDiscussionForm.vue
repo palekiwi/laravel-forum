@@ -1,10 +1,28 @@
+<script setup>
+import FixedFormWrapper from "./FixedFormWrapper.vue";
+import TextInput from "../TextInput.vue";
+import InputError from "../InputError.vue";
+import InputLabel from "../InputLabel.vue";
+import TextArea from "../TextArea.vue";
+import Select from "../Select.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import useCreateDiscussion from "@/Composables/useCreateDiscussion";
+
+const { visible, hideCreateDiscussionForm } = useCreateDiscussion();
+</script>
+
 <template>
     <div>
-        <FixedFormWrapper>
+        <FixedFormWrapper v-if="visible">
             <template #header>
-                <h1 class="text-lg font-medium">
-                    New Discussion
-                </h1>
+                <div class="flex items-center justify-between">
+                    <h1 class="text-lg font-medium">
+                        New Discussion
+                    </h1>
+                    <button v-on:click="hideCreateDiscussionForm">
+                        &times;
+                    </button>
+                </div>
             </template>
             <template #main>
                 <div class="flex items-start space-x-3">
@@ -48,13 +66,3 @@
         </FixedFormWrapper>
     </div>
 </template>
-
-<script setup>
-import FixedFormWrapper from "./FixedFormWrapper.vue";
-import TextInput from "../TextInput.vue";
-import InputError from "../InputError.vue";
-import InputLabel from "../InputLabel.vue";
-import TextArea from "../TextArea.vue";
-import Select from "../Select.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-</script>

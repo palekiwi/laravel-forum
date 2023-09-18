@@ -1,3 +1,36 @@
+<script setup>
+import ForumLayout from "@/Layouts/ForumLayout.vue";
+import Select from "@/Components/Select.vue";
+import Pagination from "@/Components/Pagination.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import Discussion from "@/Components/Forum/Discussion.vue";
+import Navigation from "@/Components/Forum/Navigation.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import { Head, router } from "@inertiajs/vue3";
+import _omitby from "lodash.omitby";
+import _isempty from "lodash.isempty";
+import useCreateDiscussion from "@/Composables/useCreateDiscussion";
+
+defineProps({
+    discussions: Object,
+    query: Object
+});
+
+const { visible, showCreateDiscussionForm } = useCreateDiscussion();
+
+const filterTopic = e => {
+    router.visit("/", {
+        data: _omitby(
+            {
+                "filter[topic]": e.target.value
+            },
+            _isempty
+        ),
+        preserveScroll: true
+    });
+};
+</script>
+
 <template>
     <Head title="Dashboard" />
 
@@ -36,36 +69,13 @@
         </div>
 
         <template #side>
+            <PrimaryButton
+                class="w-full flex justify-center h-10"
+                v-on:click="showCreateDiscussionForm"
+                v-if="$page.props.auth.user"
+                >Start a discussion
+            </PrimaryButton>
             <Navigation :query="query" />
         </template>
     </ForumLayout>
 </template>
-
-<script setup>
-import ForumLayout from "@/Layouts/ForumLayout.vue";
-import Select from "@/Components/Select.vue";
-import Pagination from "@/Components/Pagination.vue";
-import Discussion from "@/Components/Forum/Discussion.vue";
-import Navigation from "@/Components/Forum/Navigation.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import { Head, router } from "@inertiajs/vue3";
-import _omitby from "lodash.omitby";
-import _isempty from "lodash.isempty";
-
-defineProps({
-    discussions: Object,
-    query: Object
-});
-
-const filterTopic = e => {
-    router.visit("/", {
-        data: _omitby(
-            {
-                "filter[topic]": e.target.value
-            },
-            _isempty
-        ),
-        preserveScroll: true
-    });
-};
-</script>
