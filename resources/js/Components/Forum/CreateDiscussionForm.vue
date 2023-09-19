@@ -22,13 +22,17 @@ const createDiscussion = () => {
 
 <template>
     <div>
-        <FixedFormWrapper v-if="visible" v-on:submit.prevent="createDiscussion">
+        <FixedFormWrapper
+            v-if="visible"
+            v-on:submit.prevent="createDiscussion"
+            :form="form"
+        >
             <template #header>
                 <div class="flex items-center justify-between">
                     <h1 class="text-lg font-medium">
                         New Discussion
                     </h1>
-                    <button v-on:click="hideCreateDiscussionForm">
+                    <button type="button" v-on:click="hideCreateDiscussionForm">
                         &times;
                     </button>
                 </div>

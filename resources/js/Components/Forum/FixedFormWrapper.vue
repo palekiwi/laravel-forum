@@ -1,7 +1,27 @@
 <script setup>
-import { ref } from "vue";
+import axios from "axios";
+import { ref, watch } from "vue";
+
+const props = defineProps({
+    form: Object
+});
 
 const markdownPreviewEnabled = ref(false);
+const markdownPreviewHtml = ref("");
+const markdownPreviewLoading = ref(false);
+
+watch(markdownPreviewEnabled, toggled => {
+    if (!toggled) {
+        return;
+    }
+
+    markdownPreviewLoading.value = true;
+
+    axios.post(route("markdown"), { body: props.form.body }).then(response => {
+        markdownPreviewHtml.value = response.data.html;
+        markdownPreviewLoading.value = false;
+    });
+});
 </script>
 
 <template>
@@ -20,7 +40,9 @@ const markdownPreviewEnabled = ref(false);
                 <div
                     v-if="markdownPreviewEnabled"
                     class="h-48 bg-gray-100 rounded-md px-3 py-2 overflow-y-scroll border border-gray-300 shadow-sm"
-                ></div>
+                    :class="{ 'opacity-50': markdownPreviewLoading }"
+                    v-html="markdownPreviewHtml"
+                />
                 <div class="flex items-center justify-between">
                     <div>markdown toolbar</div>
                     <button
