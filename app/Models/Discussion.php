@@ -11,9 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
-/**
- * @mixin IdeHelperDiscussion
- */
 class Discussion extends Model
 {
     use HasFactory;

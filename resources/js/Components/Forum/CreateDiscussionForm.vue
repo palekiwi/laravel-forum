@@ -85,7 +85,7 @@ const createDiscussion = () => {
             </template>
             <template #button>
                 <PrimaryButton>
-                    Create
+                    Start Discussion
                 </PrimaryButton>
             </template>
         </FixedFormWrapper>

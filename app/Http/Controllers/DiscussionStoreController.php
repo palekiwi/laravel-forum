@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDiscussionRequest;
 use App\Models\Discussion;
 use App\Models\Post;
 use App\Models\Topic;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class DiscussionStoreController extends Controller
 {
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(StoreDiscussionRequest $request): RedirectResponse
     {
         /* Create the discussion */
         $discussion = Discussion::make([
