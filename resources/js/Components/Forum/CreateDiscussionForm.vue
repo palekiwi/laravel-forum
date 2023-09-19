@@ -33,7 +33,7 @@ const createDiscussion = () => {
                     </button>
                 </div>
             </template>
-            <template #main>
+            <template #main="{ markdownPreviewEnabled }">
                 <div class="flex items-start space-x-3">
                     <div class="flex-grow">
                         <div>
@@ -79,7 +79,11 @@ const createDiscussion = () => {
                 </div>
                 <div class="mt-4">
                     <InputLabel for="body" value="Body" class="sr-only" />
-                    <TextArea class="w-full" rows="6" v-model="form.body" />
+                    <TextArea
+                        v-show="!markdownPreviewEnabled"
+                        class="w-full h-48 align-top"
+                        v-model="form.body"
+                    />
                     <InputError class="mt-2" :message="form.errors.body" />
                 </div>
             </template>
