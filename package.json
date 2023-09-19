@@ -23,6 +23,7 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "@github/markdown-toolbar-element": "^2.2.0",
         "dayjs": "^1.11.9",
         "lodash.isempty": "^4.4.0",
         "lodash.omitby": "^4.6.0",

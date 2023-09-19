@@ -84,6 +84,7 @@ const createDiscussion = () => {
                 <div class="mt-4">
                     <InputLabel for="body" value="Body" class="sr-only" />
                     <TextArea
+                        id="body"
                         v-show="!markdownPreviewEnabled"
                         class="w-full h-48 align-top"
                         v-model="form.body"

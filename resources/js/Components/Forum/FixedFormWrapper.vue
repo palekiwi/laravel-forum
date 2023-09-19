@@ -1,6 +1,7 @@
 <script setup>
 import axios from "axios";
 import { ref, watch } from "vue";
+import MarkdownShortcutToolbar from "@/Components/Forum/MarkdownShortcutToolbar.vue";
 
 const props = defineProps({
     form: Object
@@ -44,7 +45,7 @@ watch(markdownPreviewEnabled, toggled => {
                     v-html="markdownPreviewHtml"
                 />
                 <div class="flex items-center justify-between">
-                    <div>markdown toolbar</div>
+                    <MarkdownShortcutToolbar for="body" />
                     <button
                         class="text-sm text-indigo-500"
                         type="button"
