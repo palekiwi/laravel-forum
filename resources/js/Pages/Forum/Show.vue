@@ -1,3 +1,22 @@
+<script setup>
+import ForumLayout from "@/Layouts/ForumLayout.vue";
+import Pagination from "@/Components/Pagination.vue";
+import Post from "@/Components/Forum/Post.vue";
+import Navigation from "@/Components/Forum/Navigation.vue";
+import { Head } from "@inertiajs/vue3";
+import pluralize from "pluralize";
+import useCreatePost from "@/Composables/useCreatePost";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+
+defineProps({
+    discussion: Object,
+    posts: Object,
+    query: Object
+});
+
+const { showCreatePostForm } = useCreatePost();
+</script>
+
 <template>
     <Head :title="discussion.title" />
 
@@ -31,23 +50,13 @@
         </div>
 
         <template #side>
-            site
+            <PrimaryButton
+                class="w-full flex justify-center h-10"
+                v-on:click="showCreatePostForm(discussion)"
+                v-if="$page.props.auth.user"
+                >Reply to discussion
+            </PrimaryButton>
             <Navigation :query="query" />
         </template>
     </ForumLayout>
 </template>
-
-<script setup>
-import ForumLayout from "@/Layouts/ForumLayout.vue";
-import Pagination from "@/Components/Pagination.vue";
-import Post from "@/Components/Forum/Post.vue";
-import Navigation from "@/Components/Forum/Navigation.vue";
-import { Head } from "@inertiajs/vue3";
-import pluralize from "pluralize";
-
-defineProps({
-    discussion: Object,
-    posts: Object,
-    query: Object
-});
-</script>
