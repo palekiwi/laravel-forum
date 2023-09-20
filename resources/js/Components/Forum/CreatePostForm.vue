@@ -10,7 +10,7 @@ import useCreatePost from "@/Composables/useCreatePost";
 const { discussion, form, visible, hideCreatePostForm } = useCreatePost();
 
 const createPost = () => {
-    form.post(route("discussions.store"), {
+    form.post(route("posts.store", discussion.value), {
         onSuccess: () => {
             form.reset();
             hideCreatePostForm();
@@ -21,11 +21,7 @@ const createPost = () => {
 
 <template>
     <div>
-        <FixedFormWrapper
-            v-if="visible"
-            v-on:submit.prevent="createPost"
-            :form="form"
-        >
+        <FixedFormWrapper v-if="visible" v-on:submit.prevent="createPost" :form="form">
             <template #header>
                 <div class="flex items-center justify-between">
                     <h1 class="text-lg font-medium">
@@ -39,12 +35,8 @@ const createPost = () => {
             <template #main="{ markdownPreviewEnabled }">
                 <div>
                     <InputLabel for="body" value="Body" class="sr-only" />
-                    <TextArea
-                        id="body"
-                        v-show="!markdownPreviewEnabled"
-                        class="w-full h-48 align-top"
-                        v-model="form.body"
-                    />
+                    <TextArea id="body" v-show="!markdownPreviewEnabled" class="w-full h-48 align-top"
+                        v-model="form.body" />
                     <InputError class="mt-2" :message="form.errors.body" />
                 </div>
             </template>
