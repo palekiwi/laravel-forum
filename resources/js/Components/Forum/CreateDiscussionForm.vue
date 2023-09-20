@@ -6,6 +6,7 @@ import InputLabel from "../InputLabel.vue";
 import TextArea from "../TextArea.vue";
 import Select from "../Select.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import Svg from "@/Components/Svg.vue";
 import useCreateDiscussion from "@/Composables/useCreateDiscussion";
 
 const { form, visible, hideCreateDiscussionForm } = useCreateDiscussion();
@@ -33,7 +34,7 @@ const createDiscussion = () => {
                         New Discussion
                     </h1>
                     <button type="button" v-on:click="hideCreateDiscussionForm">
-                        &times;
+                        <Svg name="icon-close" />
                     </button>
                 </div>
             </template>
