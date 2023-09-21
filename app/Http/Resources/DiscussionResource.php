@@ -33,6 +33,7 @@ class DiscussionResource extends JsonResource
             ),
             'user_can' => [
                 'reply' => auth()->user()->can('reply', $this->resource),
+                'delete' => auth()->user()->can('delete', $this->resource),
             ],
         ];
     }

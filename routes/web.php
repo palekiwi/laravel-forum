@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiscussionDestroyController;
 use App\Http\Controllers\DiscussionShowController;
 use App\Http\Controllers\DiscussionStoreController;
 use App\Http\Controllers\ForumIndexController;
@@ -37,7 +38,9 @@ Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->n
 Route::post('/markdown', MarkdownController::class)->name('markdown');
 
 Route::middleware('auth')->group(function () {
+    Route::delete('/discussions/{discussion}', DiscussionDestroyController::class)->name('discussions.destroy');
     Route::post('/discussions', DiscussionStoreController::class)->name('discussions.store');
+
     Route::post('/discussions/{discussion}/posts', PostStoreController::class)->name('posts.store');
     Route::patch('/posts/{post}', PostPatchController::class)->name('posts.patch');
     Route::delete('/posts/{post}', PostDestroyController::class)->name('posts.destroy');
