@@ -22,7 +22,11 @@
                 </div>
 
                 <Link
-                    :href="route('discussions.show', discussion)"
+                    :href="
+                        `${route('discussions.show', discussion)}?post=${
+                            discussion.latestPost.id
+                        }`
+                    "
                     class="inline-block text-sm mt-6"
                 >
                     Last post by

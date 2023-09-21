@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Discussion;
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 
 class PostStoreController extends Controller
 {
-    public function __invoke(StorePostRequest $request, Discussion $discussion): void
+    public function __invoke(StorePostRequest $request, Discussion $discussion): Redirector|RedirectResponse
     {
         $post = Post::make($request->validated());
 
@@ -20,6 +22,6 @@ class PostStoreController extends Controller
 
         $post->save();
 
-        redirect()->route('discussions.show', $discussion);
+        return redirect(route('discussions.show', $discussion).'?post='.$post->id);
     }
 }
