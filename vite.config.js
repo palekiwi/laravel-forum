@@ -15,6 +15,9 @@ export default defineConfig({
         }),
         vue({
             template: {
+                compilerOptions: {
+                    isCustomElement: tag => tag.includes("-")
+                },
                 transformAssetUrls: {
                     base: null,
                     includeAbsolute: false
