@@ -6,6 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import useCreatePost from "@/Composables/useCreatePost";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     post: Object
@@ -25,6 +26,14 @@ const editPost = () => {
             editing.value = false;
         }
     });
+};
+
+const deletePost = () => {
+    if (window.confirm("Are you sure?")) {
+        router.delete(route("posts.destroy", props.post), {
+            preserveScroll: true
+        });
+    }
 };
 </script>
 
@@ -94,6 +103,11 @@ const editPost = () => {
                         class="text-indigo-500 text-sm"
                     >
                         Edit
+                    </button>
+                </li>
+                <li v-if="post.user_can.delete">
+                    <button @click="deletePost" class="text-indigo-500 text-sm">
+                        Delete
                     </button>
                 </li>
             </ul>
