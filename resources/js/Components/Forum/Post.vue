@@ -1,11 +1,22 @@
 <script setup>
+import TextArea from "../TextArea.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import InputError from "@/Components/InputError.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import useCreatePost from "@/Composables/useCreatePost";
+import { useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 
-defineProps({
+const props = defineProps({
     post: Object
 });
 
 const { showCreatePostForm } = useCreatePost();
+
+const editing = ref(false);
+const editForm = useForm({
+    body: props.post.body
+});
 </script>
 
 <template>
@@ -26,11 +37,31 @@ const { showCreatePostForm } = useCreatePost();
                 </div>
             </div>
             <div class="mt-3">
-                <div v-html="post.body_markdown" class="markdown" />
+                <form action="" v-if="editing">
+                    <InputLabel for="body" value="Body" class="sr-only" />
+                    <TextArea v-model="editForm.body" id="body" class="w-full" rows="8" />
+                    <InputError class="mt-2" :message="editForm.errors.body" />
+                    <div class="mt-2 flex items-center space-x-3">
+                        <PrimaryButton>
+                            Confirm
+                        </PrimaryButton>
+                        <button type="button" @click="editing = false" class="text-sm">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+                <div v-else v-html="post.body_markdown" class="markdown" />
             </div>
             <ul class="flex items-center space-x-3 mt-6">
-                <li v-if="post.discussion.user_can.reply" @click="showCreatePostForm(post.discussion)">
-                    <button class="text-indigo-500 text-sm">Reply</button>
+                <li v-if="post.discussion.user_can.reply">
+                    <button @click="showCreatePostForm(post.discussion)" class="text-indigo-500 text-sm">
+                        Reply
+                    </button>
+                </li>
+                <li v-if="post.user_can.edit">
+                    <button @click="editing = true" class="text-indigo-500 text-sm">
+                        Edit
+                    </button>
                 </li>
             </ul>
         </div>
