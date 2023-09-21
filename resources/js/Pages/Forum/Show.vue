@@ -7,14 +7,34 @@ import { Head } from "@inertiajs/vue3";
 import pluralize from "pluralize";
 import useCreatePost from "@/Composables/useCreatePost";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { onMounted, onUpdated, nextTick } from "vue";
+import VueScrollTo from "vue-scrollto";
 
-defineProps({
+const props = defineProps({
     discussion: Object,
     posts: Object,
-    query: Object
+    query: Object,
+    postId: Number
 });
 
 const { showCreatePostForm } = useCreatePost();
+
+const scrollToPost = postId => {
+    if (!postId) {
+        return;
+    }
+    nextTick(() => {
+        VueScrollTo.scrollTo(`#post-${postId}`, 500, { offset: -50 });
+    });
+};
+
+onMounted(() => {
+    scrollToPost(props.postId);
+});
+
+onUpdated(() => {
+    scrollToPost(props.postId);
+});
 </script>
 
 <template>
@@ -23,14 +43,10 @@ const { showCreatePostForm } = useCreatePost();
     <ForumLayout>
         <div class="space-y-3">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div
-                    class="p-6 text-gray-900 flex items-center justify-between"
-                >
+                <div class="p-6 text-gray-900 flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <span
-                            class="inline-flex items-center rounded-lg bg-gray-100 px-3 py-0.5 text-sm text-gray-600"
-                            >{{ discussion.topic.name }}</span
-                        >
+                        <span class="inline-flex items-center rounded-lg bg-gray-100 px-3 py-0.5 text-sm text-gray-600">{{
+                            discussion.topic.name }}</span>
                         <h1 class="text-lg font-medium">
                             <template v-if="discussion.is_pinned">
                                 [Pinned]
@@ -50,11 +66,8 @@ const { showCreatePostForm } = useCreatePost();
         </div>
 
         <template #side>
-            <PrimaryButton
-                class="w-full flex justify-center h-10"
-                v-on:click="showCreatePostForm(discussion)"
-                v-if="discussion.user_can.reply"
-                >Reply to discussion
+            <PrimaryButton class="w-full flex justify-center h-10" v-on:click="showCreatePostForm(discussion)"
+                v-if="discussion.user_can.reply">Reply to discussion
             </PrimaryButton>
             <Navigation :query="query" />
         </template>

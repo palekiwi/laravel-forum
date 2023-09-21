@@ -29,6 +29,7 @@
         "lodash.isempty": "^4.4.0",
         "lodash.omitby": "^4.6.0",
         "pluralize": "^8.0.0",
-        "shiki": "^0.14.4"
+        "shiki": "^0.14.4",
+        "vue-scrollto": "^2.20.0"
     }
 }
