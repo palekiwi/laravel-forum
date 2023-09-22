@@ -91,4 +91,9 @@ class Discussion extends Model
             'discussion_id', 'id', 'id', 'user_id'
         )->distinct();
     }
+
+    public function solution(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'solution_post_id');
+    }
 }

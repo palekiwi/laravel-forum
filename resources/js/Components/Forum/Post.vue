@@ -9,7 +9,8 @@ import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
-    post: Object
+    post: Object,
+    isSolution: Boolean
 });
 
 const { showCreatePostForm } = useCreatePost();
@@ -35,12 +36,28 @@ const deletePost = () => {
         });
     }
 };
+
+const markAsSolution = post_id => {
+    router.patch(
+        route("discussions.solution.patch", props.post.discussion),
+        {
+            post_id: props.isSolution ? null : post_id
+        },
+        {
+            preserveScroll: true
+        }
+    );
+};
 </script>
 
 <template>
     <div
         :id="`post-${post.id}`"
-        class="space-x-3 flex bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 text-gray-900 items-start"
+        class="relative space-x-3 flex bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 text-gray-900 items-start border-2 border-transparent"
+        :class="{
+            'border-gray-800': isSolution,
+            'border-transparent': !isSolution
+        }"
     >
         <div class="w-7 flex-shrink-0">
             <img
@@ -110,7 +127,21 @@ const deletePost = () => {
                         Delete
                     </button>
                 </li>
+                <li v-if="post.discussion.user_can.solve">
+                    <button
+                        @click="markAsSolution(post.id)"
+                        class="text-indigo-500 text-sm"
+                    >
+                        {{ isSolution ? "Unmark" : "Mark" }} as solution
+                    </button>
+                </li>
             </ul>
+        </div>
+        <div
+            v-if="isSolution"
+            class="shadow-sm absolute right-0 top-0 bg-gray-800 text-gray-100 px-3 py-1 text-xs uppercase tracking-wide font-semibold"
+        >
+            Best Answer
         </div>
     </div>
 </template>

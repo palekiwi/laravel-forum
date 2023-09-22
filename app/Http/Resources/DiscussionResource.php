@@ -26,6 +26,7 @@ class DiscussionResource extends JsonResource
             'is_pinned' => $this->isPinned(),
             'topic' => TopicResource::make($this->whenLoaded('topic')),
             'post' => PostResource::make($this->whenLoaded('post')),
+            'solution' => PostResource::make($this->whenLoaded('solution')),
             'replies_count' => $this->replies_count,
             'latestPost' => PostResource::make($this->whenLoaded('latestPost')),
             'participants' => PublicUserResource::collection(
@@ -34,6 +35,7 @@ class DiscussionResource extends JsonResource
             'user_can' => [
                 'reply' => auth()->user()->can('reply', $this->resource),
                 'delete' => auth()->user()->can('delete', $this->resource),
+                'solve' => auth()->user()->can('solve', $this->resource),
             ],
         ];
     }

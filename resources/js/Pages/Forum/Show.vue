@@ -38,9 +38,9 @@ onMounted(() => {
     scrollToPost(props.postId);
 });
 
-onUpdated(() => {
-    scrollToPost(props.postId);
-});
+//onUpdated(() => {
+//    scrollToPost(props.postId);
+//});
 </script>
 
 <template>
@@ -81,7 +81,12 @@ onUpdated(() => {
                 </div>
             </div>
             <template v-if="posts.data.length">
-                <Post v-for="post in posts.data" :post="post" :key="post.id" />
+                <Post
+                    v-for="post in posts.data"
+                    :post="post"
+                    :key="post.id"
+                    :isSolution="discussion.solution?.id === post.id"
+                />
                 <Pagination :pagination="posts.meta" />
             </template>
         </div>

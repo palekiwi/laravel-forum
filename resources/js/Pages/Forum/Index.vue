@@ -16,7 +16,7 @@ defineProps({
     query: Object
 });
 
-const { visible, showCreateDiscussionForm } = useCreateDiscussion();
+const { showCreateDiscussionForm } = useCreateDiscussion();
 
 const filterTopic = e => {
     router.visit("/", {
