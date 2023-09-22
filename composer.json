@@ -10,6 +10,7 @@
         "inertiajs/inertia-laravel": "^0.6.8",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
+        "laravel/scout": "^10.3",
         "laravel/tinker": "^2.8",
         "spatie/laravel-markdown": "^2.4",
         "spatie/laravel-query-builder": "^5.5",
