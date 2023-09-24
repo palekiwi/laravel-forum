@@ -3,9 +3,11 @@ POD_NAME=laravel-forum
 APP_IMAGE=localhost/laravel/8.2-pgsql
 PGADMIN_IMAGE=docker.io/dpage/pgadmin4
 PGSQL_IMAGE=docker.io/library/postgres
+SEARCH_IMAGE=docker.io/getmeili/meilisearch:latest
 
 APP_DIR=/home/pl/code/php/laravel-forum
 DB_DIR=/home/pl/box/laravel-forum/db
+SEARCH_DIR=/home/pl/box/laravel-forum/meili_data
 
 PGSQL_PASSWORD=1234
 
@@ -18,6 +20,7 @@ podman pod create \
     -p 5050:5050 \
     -p 5432:5432 \
     -p 5173:5173 \
+    -p 7700:7700 \
     --userns=keep-id \
     $POD_NAME
 
@@ -35,6 +38,15 @@ podman create \
     -v $DB_DIR:/var/lib/postgresql/data:Z \
     --pod $POD_NAME \
     $PGSQL_IMAGE
+
+# search container
+podman create \
+    --name ${POD_NAME}-search \
+    --pod $POD_NAME \
+    -e MEILI_ENV="development" \
+    -e MEILI_MASTER_KEY='rgzUyt-OYHJWzjoojcTDeLE4waAmsK67mdH6AYXS93k'\
+    -v $SEARCH_DIR:/meili_data:Z \
+    $SEARCH_IMAGE
 
 # pgadmin container
 podman create \
