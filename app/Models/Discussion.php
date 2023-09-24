@@ -27,6 +27,11 @@ class Discussion extends Model
         });
     }
 
+    public function toSearchableArray(): array
+    {
+        return $this->only('id', 'title');
+    }
+
     /**
      * @param  mixed  $value
      */
