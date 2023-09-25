@@ -10,8 +10,11 @@ import Svg from "@/Components/Svg.vue";
 import { Mentionable } from "vue-mention";
 
 import useCreateDiscussion from "@/Composables/useCreateDiscussion";
+import useMentionSearch from "@/Composables/useMentionSearch";
 
 const { form, visible, hideCreateDiscussionForm } = useCreateDiscussion();
+
+const { mentionSearch, mentionSearchResults } = useMentionSearch();
 
 const createDiscussion = () => {
     form.post(route("discussions.store"), {
@@ -63,10 +66,7 @@ const createDiscussion = () => {
                 </div>
                 <div class="mt-4">
                     <InputLabel for="body" value="Body" class="sr-only" />
-                    <Mentionable :keys="['@']" offset="6" :items="[
-                        { value: 'test', label: 'Test (@test)' },
-                        { value: 'beti', label: 'Beti (@beti)' }
-                    ]">
+                    <Mentionable :keys="['@']" offset="6" @search="mentionSearch" :items="mentionSearchResults">
                         <TextArea id="body" v-show="!markdownPreviewEnabled" class="w-full h-48 align-top"
                             v-model="form.body" />
                     </Mentionable>
