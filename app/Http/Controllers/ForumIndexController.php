@@ -10,6 +10,7 @@ use App\Http\QueryFilters\TopicQueryFilter;
 use App\Http\QueryFilters\UnsolvedQueryFilter;
 use App\Http\Resources\DiscussionResource;
 use App\Models\Discussion;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -31,7 +32,14 @@ class ForumIndexController extends Controller
                     ->withCount('replies')
                     ->orderByPinned()
                     ->orderByLastPost()
-                    ->paginate(10)
+                    ->tap(function (Builder $builder) use ($request) {
+                        if (filled($request->search)) {
+                            return $builder->whereIn(
+                                'id', Discussion::search($request->search)->get()->pluck('id')
+                            );
+                        }
+                    })
+                    ->paginate(1)
                     ->appends($request->query())
             ),
         ]);
