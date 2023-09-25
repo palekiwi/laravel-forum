@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\QueryFilters\MentionedQueryFilter;
 use App\Http\QueryFilters\MineQueryFilter;
 use App\Http\QueryFilters\NoRepliesQueryFilter;
 use App\Http\QueryFilters\ParticipatingQueryFilter;
@@ -57,6 +58,7 @@ class ForumIndexController extends Controller
             AllowedFilter::custom('topic', new TopicQueryFilter()),
             AllowedFilter::custom('solved', new SolvedQueryFilter()),
             AllowedFilter::custom('unsolved', new UnsolvedQueryFilter()),
+            AllowedFilter::custom('mentioned', new MentionedQueryFilter()),
         ];
     }
 }
