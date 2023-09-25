@@ -11,6 +11,7 @@ import { Head, router } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 import _omitby from "lodash.omitby";
 import _isempty from "lodash.isempty";
+import _debounce from "lodash.debounce";
 import useCreateDiscussion from "@/Composables/useCreateDiscussion";
 
 const props = defineProps({
@@ -33,11 +34,15 @@ const filterTopic = e => {
 };
 const searchQuery = ref(props.query.search || "");
 
-watch(searchQuery, query => {
+const handleSearchInput = _debounce(query => {
     router.reload({
         data: { search: query },
         preserveScroll: true
     });
+}, 500);
+
+watch(searchQuery, query => {
+    handleSearchInput(query);
 });
 </script>
 

@@ -39,7 +39,7 @@ class ForumIndexController extends Controller
                             );
                         }
                     })
-                    ->paginate(1)
+                    ->paginate(10)
                     ->appends($request->query())
             ),
         ]);

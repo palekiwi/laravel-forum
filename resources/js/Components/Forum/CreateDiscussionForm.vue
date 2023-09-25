@@ -7,6 +7,8 @@ import TextArea from "../TextArea.vue";
 import Select from "../Select.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Svg from "@/Components/Svg.vue";
+import { Mentionable } from "vue-mention";
+
 import useCreateDiscussion from "@/Composables/useCreateDiscussion";
 
 const { form, visible, hideCreateDiscussionForm } = useCreateDiscussion();
@@ -23,11 +25,7 @@ const createDiscussion = () => {
 
 <template>
     <div>
-        <FixedFormWrapper
-            v-if="visible"
-            v-on:submit.prevent="createDiscussion"
-            :form="form"
-        >
+        <FixedFormWrapper v-if="visible" v-on:submit.prevent="createDiscussion" :form="form">
             <template #header>
                 <div class="flex items-center justify-between">
                     <h1 class="text-lg font-medium">
@@ -42,24 +40,12 @@ const createDiscussion = () => {
                 <div class="flex items-start space-x-3">
                     <div class="flex-grow">
                         <div>
-                            <InputLabel
-                                for="title"
-                                value="Title"
-                                class="sr-only"
-                            />
+                            <InputLabel for="title" value="Title" class="sr-only" />
 
-                            <TextInput
-                                id="title"
-                                type="text"
-                                class="w-full"
-                                placeholder="Discussion Title"
-                                v-model="form.title"
-                            />
+                            <TextInput id="title" type="text" class="w-full" placeholder="Discussion Title"
+                                v-model="form.title" />
 
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.title"
-                            />
+                            <InputError class="mt-2" :message="form.errors.title" />
                         </div>
                     </div>
                     <div>
@@ -68,28 +54,22 @@ const createDiscussion = () => {
                             <option value="">
                                 Choose a topic
                             </option>
-                            <option
-                                :value="topic.id"
-                                v-for="topic in $page.props.topics"
-                                :key="topic.id"
-                            >
+                            <option :value="topic.id" v-for="topic in $page.props.topics" :key="topic.id">
                                 {{ topic.name }}
                             </option>
                         </Select>
-                        <InputError
-                            class="mt-2"
-                            :message="form.errors.topic_id"
-                        />
+                        <InputError class="mt-2" :message="form.errors.topic_id" />
                     </div>
                 </div>
                 <div class="mt-4">
                     <InputLabel for="body" value="Body" class="sr-only" />
-                    <TextArea
-                        id="body"
-                        v-show="!markdownPreviewEnabled"
-                        class="w-full h-48 align-top"
-                        v-model="form.body"
-                    />
+                    <Mentionable :keys="['@']" offset="6" :items="[
+                        { value: 'test', label: 'Test (@test)' },
+                        { value: 'beti', label: 'Beti (@beti)' }
+                    ]">
+                        <TextArea id="body" v-show="!markdownPreviewEnabled" class="w-full h-48 align-top"
+                            v-model="form.body" />
+                    </Mentionable>
                     <InputError class="mt-2" :message="form.errors.body" />
                 </div>
             </template>
