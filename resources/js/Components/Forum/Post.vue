@@ -108,7 +108,7 @@ const markAsSolution = post_id => {
             <ul class="flex items-center space-x-3 mt-6">
                 <li v-if="post.discussion.user_can.reply">
                     <button
-                        @click="showCreatePostForm(post.discussion)"
+                        @click="showCreatePostForm(post.discussion, post.user)"
                         class="text-indigo-500 text-sm"
                     >
                         Reply
