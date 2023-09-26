@@ -4,6 +4,9 @@ import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
+    ssr: {
+        noExternal: ["vue-mention", "floating-vue"]
+    },
     plugins: [
         svgLoader({
             svgo: false

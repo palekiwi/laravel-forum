@@ -7,7 +7,7 @@ import { Head, router } from "@inertiajs/vue3";
 import pluralize from "pluralize";
 import useCreatePost from "@/Composables/useCreatePost";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { onMounted, onUpdated, nextTick } from "vue";
+import { onMounted, watch, nextTick } from "vue";
 import VueScrollTo from "vue-scrollto";
 
 const props = defineProps({
@@ -38,9 +38,12 @@ onMounted(() => {
     scrollToPost(props.postId);
 });
 
-//onUpdated(() => {
-//    scrollToPost(props.postId);
-//});
+watch(
+    () => props.postId,
+    postId => {
+        scrollToPost(postId);
+    }
+);
 </script>
 
 <template>
